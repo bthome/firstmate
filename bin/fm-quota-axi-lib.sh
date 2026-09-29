@@ -152,7 +152,7 @@ fm_quota_single_provider_for_harness() {
       printf '%s\n' "$provider"
       return 0
     fi
-  done < <(fm_quota_single_provider_table)
+  done <<<"$(fm_quota_single_provider_table)"
   return 1
 }
 
