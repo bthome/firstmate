@@ -1,0 +1,41 @@
+ok - claude (2.1.284 (Claude Code)): real idle composer classifies empty
+ok - claude (2.1.284 (Claude Code)): the same idle pane read cursorless is not pending (verdict: empty)
+ok - codex (codex-cli 0.159.0): real idle composer classifies empty
+ok - codex (codex-cli 0.159.0): the same idle pane read cursorless is not pending (verdict: empty)
+ok - opencode (1.18.33): real idle composer classifies empty
+ok - opencode (1.18.33): the same idle pane read cursorless is not pending (verdict: unknown)
+# pi pane tail at failure:
+#    This allows pi to load .pi settings and resources, install missing project packages, and execute project extensions.
+#    → Trust
+#      Trust parent folder (/home/brian/.no-mistakes/worktrees/c43646c620e0)
+#      Trust (this session only)
+#      Do not trust
+#      Do not trust (this session only)
+#    ↑↓ navigate  enter select  escape/ctrl+c cancel
+#   ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+not ok - pi (0.87.1): idle composer never classified empty (last verdict: unknown)
+# grok pane tail at failure:
+#                                                                                                          ⠐⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+#                                                                                           Do you trust the contents of this directory?
+#                                                                            /home/brian/.no-mistakes/worktrees/c43646c620e0/01M3QDBVXHMFQ9HV6YDQXX8N5D
+#                                                                                     Grok Build may run or modify contents in this directory,
+#                                                                                                      posing security risks.
+#                                                                                                  Yes, proceed                 y
+#                                                                                                  No, quit                     n
+#                                                                                                                                                                                                  Grok Build  1.0.44 [stable]
+not ok - grok (grok 1.0.44 (5b807183dd79) [stable]): idle composer never classified empty (last verdict: unknown)
+# harness absent, not verified here: kimi
+# muse pane tail at failure:
+#   Do you trust this workspace?
+#   Workspace: /home/brian/.no-mistakes/worktrees/c43646c620e0/01M3QDBVXHMFQ9HV6YDQXX8N5D
+#   Trusting allows project-local skills, rules, hooks, and plugin config to load before the model runs.
+#   Only trust this workspace when you trust its contents.
+#   > 1  Trust and continue
+#     2  Quit
+#   Use Up/Down or 1/2, then Enter. Esc quits.
+not ok - muse (Muse Code 1.4.1 (1.4.1-R4503.1)): idle composer never classified empty (last verdict: unknown)
+ok - claude-named (2.1.284 (Claude Code)): real idle composer classifies empty
+ok - claude-named (2.1.284 (Claude Code)): the same idle pane read cursorless is not pending (verdict: empty)
+ok - strict posture live: a blank shell row classifies unknown and injection defers
+# harness absent, not verified here: zellij (false-positive regression not exercised)
+not ok - live composer-matrix guard observed failures above
