@@ -1446,10 +1446,11 @@ inject_msg() {  # <message> [state]
   #      composer. The shared classifier (fm_backend_composer_state ->
   #      fm_composer_classify_content, bin/fm-composer-lib.sh) reports 'pending'
   #      for real unsubmitted text (a human's half-typed line, or a swallowed
-  #      prior injection) and 'unknown' when it recognized no composer shape
-  #      at all: a bare dead-shell prompt (the agent exited to its login
-  #      shell), an unreadable pane, or a harness screen the classifier does
-  #      not know. Neither is a safe target - typing the escalation into a
+  #      prior injection) and 'unknown' when it could not prove the composer
+  #      empty or pending: a bare dead-shell prompt (the agent exited to its
+  #      login shell), an unreadable pane, a harness screen the classifier
+  #      does not know, or a recognized composer whose harness is not idle.
+  #      Neither is a safe target - typing the escalation into a
   #      shell could execute it - so defer on anything that is not
   #      affirmatively 'empty', and name which of the two it was so a wedge
   #      that never clears points at the right owner. A deferred escalation
@@ -1458,7 +1459,7 @@ inject_msg() {  # <message> [state]
   if [ "$composer" != empty ]; then
     case "$composer" in
       pending|pending-unproven) reason='unsubmitted text in the composer' ;;
-      *) reason='no composer shape recognized - dead-shell prompt, unreadable pane, or a screen the composer classifier does not know' ;;
+      *) reason='composer not proven empty or pending (unrecognized screen, or harness not idle)' ;;
     esac
     INJECT_LAST_FAILURE="deferred: supervisor composer not confirmed-empty (state=${composer:-unknown}: $reason)"
     log "inject $INJECT_LAST_FAILURE"

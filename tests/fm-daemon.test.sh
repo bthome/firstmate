@@ -2334,8 +2334,9 @@ test_max_defer_pending_composer_alarms_without_typing() {
 
 test_composer_deferral_names_pending_text_or_unrecognized_shape() {
   # A deferral must say WHICH refusal it was: real unsubmitted text is a
-  # human's draft, while an unrecognized screen points at the classifier, the
-  # pane, or a dead shell - the case a titled claude rule once hid for hours.
+  # human's draft, while an unproven composer points at the classifier, the
+  # pane, a dead shell, or a busy harness - the case a titled claude rule once
+  # hid for hours.
   local dir state fakebin sent log
   dir=$(make_bordered_case composer-deferral-reason)
   state="$dir/state"; fakebin="$dir/fakebin"; log="$dir/daemon.log"
@@ -2354,10 +2355,10 @@ test_composer_deferral_names_pending_text_or_unrecognized_shape() {
     inject_msg "needs-decision: pick B" "$state"; then
     fail "inject_msg typed into a screen with no recognized composer"
   fi
-  grep -F 'inject deferred: supervisor composer not confirmed-empty (state=unknown: no composer shape recognized' "$log" >/dev/null \
-    || fail "an unrecognized screen deferral does not say no composer shape was recognized: $(cat "$log")"
+  grep -F 'inject deferred: supervisor composer not confirmed-empty (state=unknown: composer not proven empty or pending (unrecognized screen, or harness not idle))' "$log" >/dev/null \
+    || fail "an unrecognized screen deferral does not say the composer was not proven empty or pending: $(cat "$log")"
   [ ! -s "$sent" ] || fail "a deferred inject typed text"
-  pass "a composer deferral names pending text apart from an unrecognized composer shape"
+  pass "a composer deferral names pending text apart from an unproven composer"
 }
 
 test_normal_flush_clears_stale_wedge_marker() {
