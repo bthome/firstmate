@@ -90,7 +90,9 @@
 #   watcher       a live watcher with a fresh beacon holds this home's lock
 #                 (skipped on an empty fleet).
 #   mate          --mate: its window is alive and its own session lock names a
-#                 live process, so it got past trust into its charter.
+#                 live process, so it got past trust into its charter. With
+#                 --supervision-host off, its inherited flag and disabled host
+#                 gate are also required.
 #   worker        --worker: its current crew state is paused on the gate.
 #   treehouse     ~/.treehouse gained no entry since up began.
 #
@@ -143,6 +145,7 @@ load_lab() {  # <root>: refuse anything up did not build, then load its record
   LAB=$(rec_get "$ROOT" home)
   TMUX_DIR=$(rec_get "$ROOT" tmux_dir)
   EXPECT_HOST=$(rec_get "$ROOT" expect_host)
+  HOST_OFF=$(rec_get "$ROOT" host_off)
   WANT_MATE=$(rec_get "$ROOT" mate)
   WANT_WORKER=$(rec_get "$ROOT" worker)
   NONCE=$(rec_get "$ROOT" nonce)
@@ -313,10 +316,17 @@ check_watcher() {
 }
 
 check_mate() {
-  local pid
+  local pid gate_rc
   window_alive mate || { echo "fail mate: the $MATE_ID window is not running"; return 1; }
   pid=$(sed -n 1p "$ROOT/mate/state/.lock" 2>/dev/null)
   pid_alive "$pid" || { echo "fail mate: the mate holds no session lock yet (wedged before its charter?)"; return 1; }
+  if [ "$HOST_OFF" = yes ]; then
+    [ -f "$ROOT/mate/config/supervision-host-off" ] \
+      || { echo "fail mate: the inherited supervision-host-off flag is missing"; return 1; }
+    bash "$ROOT/mate/bin/fm-supervision-engine-lib.sh" enabled "$ROOT/mate/config" claude
+    gate_rc=$?
+    [ "$gate_rc" -eq 1 ] || { echo "fail mate: the supervision-host gate did not read off (exit $gate_rc)"; return 1; }
+  fi
   echo "ok mate: $MATE_ID pid $pid in $ROOT/mate"
 }
 
@@ -495,6 +505,7 @@ cmd_up() {
     echo "harness=$harness"
     echo "home=$LAB"
     echo "expect_host=$expect_host"
+    if [ "$host_line" = off ]; then echo 'host_off=yes'; else echo 'host_off=no'; fi
     echo "mate=$mate"
     echo "worker=$worker"
     echo "nonce=$NONCE"
