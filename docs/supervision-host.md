@@ -20,7 +20,7 @@ An arm owner is the component in each primary harness that starts watcher cycles
 
 ## Scope today
 
-The host runs by default on a Claude primary and is opt-in per home on the other five primaries it supports; a `config/supervision-host-off`, which a primary's opt-out carries to every secondmate home, opts any home out, and [configuration.md](configuration.md#supervision-host-configsupervision-host) owns both files.
+The host runs by default on a Claude primary and is opt-in per home on the other five primaries it supports; [configuration.md](configuration.md#supervision-host-configsupervision-host) owns the home gate and inherited opt-out.
 A home that does not run the host behaves exactly as it does without it.
 Today it runs beside a Claude, Cursor, OpenCode, omp, Grok, or Codex primary: away on all six, and attended on Claude and Cursor, the primaries with a verified [dialog mirror](#the-dialog-mirror).
 

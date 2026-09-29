@@ -333,8 +333,8 @@ It takes no wake, so every wake reaches main as it would without the host.
 Each away-posture wake includes a line naming the problem.
 The running host reads both files at every wake, so an engine change or an opt-out takes effect at the next wake without a restart.
 
-`config/supervision-host-off` is inherited into secondmate homes under the primary-authoritative contract owned by [`secondmate-provisioning`](../.agents/skills/secondmate-provisioning/SKILL.md): a primary that opts out opts every secondmate home out at its next spawn or convergence, and clearing the primary's opt-out returns each of them to its own `config/supervision-host` and primary default.
-Because that contract is primary-authoritative, the opt-out is the primary's choice for the whole fleet: a secondmate cannot keep the host while the primary is opted out, and its own opt-out is removed at the next convergence while the primary has none.
+The opt-out is inherited into secondmate homes: a primary that opts out also opts its secondmates out, and clearing it restores each mate's own host setting at its next spawn or convergence.
+The primary-authoritative propagation contract, including removal of a mate's local opt-out when the primary has none, is owned by [`secondmate-provisioning`](../.agents/skills/secondmate-provisioning/SKILL.md).
 `config/supervision-host` is local to each home and not inherited, because each home's engine and model are its own choice.
 While the home runs the host, main's lease-checked commands also take the per-task lease lock, so a claim by the host's engine cannot race a mutation main already started (`bin/fm-lease-lib.sh`).
 
