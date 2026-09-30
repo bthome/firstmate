@@ -207,6 +207,11 @@ test_matrix_claude_named_session_titled_rule() {
   assert_screen "named claude idle on zellij" empty "$CAPS_STYLED_NOID" "$idle"
   assert_screen "named claude idle on cmux/orca" empty "$CAPS_PLAIN" "$idle"
   assert_screen "named claude idle on tmux" empty "$CAPS_TMUX" "$idle" 2 "$claude_idle"
+  # A multiword session name renders the same way and opens the same pair.
+  assert_screen "multiword named claude idle on herdr" empty "$CAPS_STYLED" \
+    "${idle/ Andrew ─/ Andrew Chen ─}" '' "$claude_idle"
+  assert_screen "multiword named claude typed on herdr" pending "$CAPS_STYLED" \
+    "transcript line"$'\n'"${titled/ Andrew ─/ Andrew Chen ─}"$'\n'"❯ fix the login bug"$'\n'"$rule" '' "$claude_idle"
   # Claude's prompt suggestion is dim ghost text, not input.
   ghost="transcript line"$'\n'"$titled"$'\n'"❯$NBSP${ESC}[0m${ESC}[2mTry \"fix lint errors\"${ESC}[0m"$'\n'"$rule"
   assert_screen "named claude ghost suggestion on herdr" empty "$CAPS_STYLED" "$ghost" '' "$claude_idle"

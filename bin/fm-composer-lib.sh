@@ -768,10 +768,11 @@ _fm_composer_pi_separator_row() {  # <trimmed-row>
 }
 
 # _fm_composer_titled_rule_row: a rule carrying one right-aligned title - a
-# solid pi separator run, one space, a title holding no `─`, one space, and a
-# closing run of one to three `─`. Claude Code draws its composer's opening
-# rule this way when the session is named (`claude -n <name>`); it is never a
-# closing rule and never proves a pi composer on its own.
+# solid pi separator run, one space, a title (one or more words) holding no
+# `─`, one space, and a closing run of one to three `─`. Claude Code draws its
+# composer's opening rule this way when the session is named
+# (`claude -n <name>`); it is never a closing rule and never proves a pi
+# composer on its own.
 _fm_composer_titled_rule_row() {  # <trimmed-row>
   local row=$1 head tail title
   case "$row" in *'─ '?*' ─'*) ;; *) return 1 ;; esac
@@ -781,7 +782,7 @@ _fm_composer_titled_rule_row() {  # <trimmed-row>
   title=${title%" $tail"}
   _fm_composer_pi_separator_row "$head" || return 1
   case "$tail" in ─|──|───) ;; *) return 1 ;; esac
-  case "$title" in ''|' '*|*' '|*─*) return 1 ;; esac
+  case "$title" in ''|' '*|*─*) return 1 ;; esac
   return 0
 }
 
