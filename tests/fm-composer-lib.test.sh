@@ -214,7 +214,7 @@ test_matrix_claude_named_session_titled_rule() {
   # Claude's prompt suggestion is dim ghost text, not input.
   ghost="transcript line"$'\n'"$titled"$'\n'"❯$NBSP${ESC}[0m${ESC}[2mTry \"fix lint errors\"${ESC}[0m"$'\n'"$rule"
   assert_screen "named claude ghost suggestion on herdr" empty "$CAPS_STYLED" "$ghost" '' "$claude_idle"
-  out=$(fm_composer_classify_screen "$CAPS_STYLED" "${ghost/ Andrew ─/────────}" '' "$claude_idle")
+  out=$(fm_composer_classify_screen "$CAPS_STYLED" "${ghost/ Andrew ─/─────────}" '' "$claude_idle")
   [ "$out" = empty ] || fail "unnamed claude ghost suggestion on herdr: expected empty, got '$out'"
   # The protection that must not move: typed text in the named composer.
   typed="transcript line"$'\n'"$titled"$'\n'"❯ fix the login bug"$'\n'"$rule"
