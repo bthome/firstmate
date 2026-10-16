@@ -1,0 +1,8 @@
+ok - claude (2.1.300 (Claude Code)): real idle composer classifies empty
+ok - claude (2.1.300 (Claude Code)): the same idle pane read cursorless is not pending (verdict: empty)
+ok - claude-named (2.1.300 (Claude Code)): real idle composer classifies empty
+ok - claude-named (2.1.300 (Claude Code)): the same idle pane read cursorless is not pending (verdict: empty)
+ok - strict posture live: a blank shell row classifies unknown and injection defers
+# harness absent, not verified here: zellij (false-positive regression not exercised)
+ok - live composer-matrix guard verified 5 live surface(s)
+exit=0
